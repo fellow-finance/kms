@@ -100,4 +100,30 @@ impl Client {
     pub fn get_client_address(&self) -> alloy_primitives::Address {
         self.client_address
     }
+
+
+    /// Constructor method to create a client with server addresses instead of public keys.
+    /// This is useful for SP1 zkVM and other non-WASM environments where we only have addresses.
+    ///
+    /// * `server_addrs` - a map of server IDs to their addresses.
+    /// * `client_address` - the client wallet address.
+    /// * `params` - the FHE parameters.
+    /// * `decryption_mode` - the decryption mode to use.
+    pub fn new_with_addresses(
+        server_addrs: HashMap<u32, alloy_primitives::Address>,
+        client_address: alloy_primitives::Address,
+        params: DKGParams,
+        decryption_mode: Option<DecryptionMode>,
+    ) -> Self {
+        let decryption_mode = decryption_mode.unwrap_or_default();
+        Client {
+            #[cfg(feature = "non-wasm")]
+            rng: Box::new(AesRng::from_entropy()),
+            server_identities: ServerIdentities::Addrs(server_addrs),
+            client_address,
+            client_sk: None,
+            params,
+            decryption_mode,
+        }
+    }
 }
