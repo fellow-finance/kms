@@ -174,3 +174,9 @@ insecure = [
     "threshold-fhe/testing",
     "dep:nsm-nitro-enclave-utils"
 ]
+sp1-compatible = [
+    "threshold-fhe/non-wasm",
+    "threshold-fhe/testing",
+    "kms-grpc/insecure",  # Use insecure to avoid networking
+    # Exclude all networking dependencies for SP1 zkVM compatibility
+]
