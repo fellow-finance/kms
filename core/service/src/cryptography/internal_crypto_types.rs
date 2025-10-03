@@ -90,7 +90,7 @@ impl UnifiedPublicEncKey {
 
 // Alias wrapping the ephemeral public encryption key the user's wallet constructs and the server
 // uses to encrypt its payload
-pub struct PublicEncKey<C: KemCore>(pub(crate) C::EncapsulationKey);
+pub struct PublicEncKey<C: KemCore>(pub C::EncapsulationKey);
 
 #[cfg(test)]
 impl PublicEncKey<ml_kem::MlKem512> {
@@ -214,7 +214,7 @@ impl UnifiedPrivateEncKey {
 
 // Alias wrapping the ephemeral private decryption key the user's wallet constructs to receive the
 // server's encrypted payload
-pub struct PrivateEncKey<C: KemCore>(pub(crate) C::DecapsulationKey);
+pub struct PrivateEncKey<C: KemCore>(pub C::DecapsulationKey);
 
 impl<C: KemCore> Clone for PrivateEncKey<C> {
     fn clone(&self) -> Self {
